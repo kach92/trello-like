@@ -1,0 +1,19 @@
+{
+  "name": "trello-like",
+  "version": "1.0.0",
+  "description": "This page contains description and requirements for a Front-End assignment on [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.maltem.com/kach92/Trello-like.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^0.15.1",
+    "lowdb": "^1.0.0"
+  }
+}
