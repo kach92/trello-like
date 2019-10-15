@@ -183,15 +183,37 @@ const toggleDescription = function(event){
 const createInsertNewCol = function(col){
     const addNewColContainer = document.querySelector(".add-new-col-container");
     const colInstance = document.importNode(colElement.content,true);
-    let className = "col-"+col.id
-    colInstance.querySelector(".trello-col").classList.add(className)
-    colInstance.querySelector(".trello-col").setAttribute("column-id",col.id);
-    colInstance.querySelector(".title").innerHTML = col.title;
-    const createInputPrompt = colInstance.querySelector(".createInput");
-    createInputPrompt.addEventListener("click",createInput);
-    createInputPrompt.setAttribute("column-id",col.id);
+    newColInitialise(colInstance,col)
     main.insertBefore(colInstance,addNewColContainer);
 
+}
+
+async function deleteCol(event){
+    const targetCol = event.target.parentElement;
+    const colId = targetCol.getAttribute("column-id");
+    const deleteCard = await fetch('http://localhost:3000/columns/'+colId, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            return data
+    });
+    main.removeChild(targetCol);
+}
+
+const newColInitialise = function(instance,col){
+
+    let className = "col-"+col.id
+    instance.querySelector(".trello-col").classList.add(className)
+    instance.querySelector(".trello-col").setAttribute("column-id",col.id);
+    instance.querySelector(".title").innerHTML = col.title;
+    instance.querySelector(".delete-col-button").addEventListener("click",deleteCol);
+    const createInputPrompt = instance.querySelector(".createInput");
+    createInputPrompt.addEventListener("click",createInput);
+    createInputPrompt.setAttribute("column-id",col.id);
 }
 async function addNewColToTrello(event){
     const addNewColInput = document.querySelector(".col-name-input");
@@ -241,13 +263,7 @@ async function fetchColumns(){
     // })
     columns.forEach(column=>{
         const colInstance = document.importNode(colElement.content,true);
-        let className = "col-"+column.id
-        colInstance.querySelector(".trello-col").classList.add(className)
-        colInstance.querySelector(".trello-col").setAttribute("column-id",column.id);
-        colInstance.querySelector(".title").innerHTML = column.title;
-        const createInputPrompt = colInstance.querySelector(".createInput");
-        createInputPrompt.addEventListener("click",createInput);
-        createInputPrompt.setAttribute("column-id",column.id);
+        newColInitialise(colInstance,column);
         const colTodoList = colInstance.querySelector(".todo-list");
 
         todoItems.filter(x=>x.columnId == column.id).forEach(x=>{

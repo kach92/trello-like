@@ -32,6 +32,7 @@ h2{
     max-height:90vh;
     overflow-y: auto;
     min-width:200px;
+    position:relative;
 }
 
 .trello-col h2{
@@ -157,4 +158,17 @@ h2{
     margin-bottom:5px;
     background-color: #d1d2d5;
     color:grey;
+}
+
+.delete-col-button{
+    position:absolute;
+    top:10px;
+    right:7px;
+    font-size:20px;
+    opacity: 0;
+}
+
+.trello-col:hover .delete-col-button{
+    opacity: 1;
+    cursor: pointer;
 }
