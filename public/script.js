@@ -113,7 +113,7 @@ function postEdit(cardId,colId){
 const closeInput = function(event){
     const colId = event.target.getAttribute("column-id");
     const targetCol = main.querySelector(".col-"+colId);
-    targetCol.removeChild(targetCol.querySelector(".card-input"));
+    targetCol.removeChild(targetCol.querySelector(".add-new-card-input"));
     const addPromptInstance = document.importNode(addPromptElement.content,true);
     addPromptInstance.querySelector(".createInput").addEventListener("click",createInput);
     addPromptInstance.querySelector(".createInput").setAttribute("column-id",colId);
@@ -140,6 +140,7 @@ const createInput = function(event){
     const colId = event.target.getAttribute("column-id")
     targetCol.removeChild(event.target);
     const cardInputInstance = document.importNode(cardInputElement.content,true);
+    cardInputInstance.querySelector(".card-input").classList.add("add-new-card-input");
     cardInputInstance.querySelector(".add-button").addEventListener("click",postInput);
     cardInputInstance.querySelector(".add-button").setAttribute("column-id",colId);
     cardInputInstance.querySelector(".x-button").setAttribute("column-id",colId);
@@ -246,7 +247,7 @@ async function fetchColumns(){
         colInstance.querySelector(".title").innerHTML = column.title;
         const createInputPrompt = colInstance.querySelector(".createInput");
         createInputPrompt.addEventListener("click",createInput);
-        createInputPrompt.setAttribute("column-id",column.id)
+        createInputPrompt.setAttribute("column-id",column.id);
         const colTodoList = colInstance.querySelector(".todo-list");
 
         todoItems.filter(x=>x.columnId == column.id).forEach(x=>{

@@ -39,10 +39,10 @@
       "columnId": 2
     },
     {
-      "id": 5,
-      "title": "Card 5",
+      "title": "Card 5we",
       "description": "Suspendisse posuere ipsum at dui lacinia, ut faucibus lectus mollis.",
-      "columnId": 2
+      "columnId": "2",
+      "id": 5
     },
     {
       "title": "rrrr123",
