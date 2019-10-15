@@ -11,22 +11,10 @@
   ],
   "cards": [
     {
-      "id": 1,
-      "title": "Card 1",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "columnId": 1
-    },
-    {
       "id": 2,
       "title": "Card 2",
       "description": "Quisque et pellentesque sem.",
       "columnId": 1
-    },
-    {
-      "title": "Try change ori name",
-      "description": "Nulla porttitor erat a sollicitudin volutpat.",
-      "columnId": "1",
-      "id": 3
     },
     {
       "id": 4,
@@ -47,28 +35,10 @@
       "id": 6
     },
     {
-      "title": "werwe",
-      "description": "",
-      "columnId": "1",
-      "id": 7
-    },
-    {
       "title": "really is just testing",
       "description": "test",
       "columnId": "1",
       "id": 8
-    },
-    {
-      "title": "like really just do this again",
-      "description": "lets do this again",
-      "columnId": "1",
-      "id": 9
-    },
-    {
-      "title": "wwwwwwww",
-      "description": "www",
-      "columnId": "1",
-      "id": 10
     },
     {
       "title": "rweq",
@@ -98,6 +68,11 @@
       "description": "fff12321",
       "columnId": "1",
       "id": 15
+    },
+    {
+      "title": "wilfred",
+      "description": "noob",
+      "id": 16
     }
   ]
 }

@@ -14,16 +14,39 @@ window.addEventListener('load',()=>{
     fetchColumns();
 })
 
+const handleNewCardInitialization = function(instance,obj,colId){
+    instance.querySelector(".title").innerHTML = obj.title;
+    instance.querySelector(".description").innerHTML = obj.description;
+    instance.querySelector(".todo-item").addEventListener("click",toggleDescription);
+    instance.querySelector(".todo-item").setAttribute("card-id",obj.id);
+    instance.querySelector(".edit-button").addEventListener("click",createEditInput);
+    instance.querySelector(".edit-button").setAttribute("column-id",colId);
+    instance.querySelector(".delete-button").addEventListener("click",deleteCard(obj.id,colId));
+}
+
+const deleteCard = function (cardId,colId){
+    return async function (event){
+        const deleteCard = await fetch('http://localhost:3000/cards/'+cardId, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+            }).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                return data
+        });
+        const todoList = main.querySelector(".col-"+colId).querySelector(".todo-list");
+        todoList.removeChild(event.target.parentElement);
+
+    }
+
+}
 
 const addCardIntoList = function(colId,obj){
     const todoList = main.querySelector(".col-"+colId).querySelector(".todo-list");
     const todoInstance = document.importNode(todoElement.content,true);
-    todoInstance.querySelector(".title").innerHTML = obj.title;
-    todoInstance.querySelector(".description").innerHTML = obj.description;
-    todoInstance.querySelector(".todo-item").addEventListener("click",toggleDescription);
-    todoInstance.querySelector(".todo-item").setAttribute("card-id",obj.id);
-    todoInstance.querySelector(".edit-button").addEventListener("click",createEditInput);
-    todoInstance.querySelector(".edit-button").setAttribute("column-id",colId);
+    handleNewCardInitialization(todoInstance,obj,colId);
     todoList.appendChild(todoInstance);
 
 }
@@ -31,12 +54,7 @@ const addCardIntoList = function(colId,obj){
 const addEditedCardIntoList = function(colId,obj,inputContainer){
     const todoList = main.querySelector(".col-"+colId).querySelector(".todo-list");
     const todoInstance = document.importNode(todoElement.content,true);
-    todoInstance.querySelector(".title").innerHTML = obj.title;
-    todoInstance.querySelector(".description").innerHTML = obj.description;
-    todoInstance.querySelector(".todo-item").addEventListener("click",toggleDescription);
-    todoInstance.querySelector(".todo-item").setAttribute("card-id",obj.id);
-    todoInstance.querySelector(".edit-button").addEventListener("click",createEditInput);
-    todoInstance.querySelector(".edit-button").setAttribute("column-id",colId);
+    handleNewCardInitialization(todoInstance,obj,colId);
     todoList.insertBefore(todoInstance,inputContainer);
     todoList.removeChild(inputContainer);
 }
@@ -144,6 +162,8 @@ const toggleDescription = function(event){
         description.style.display = 'block';
 }
 
+
+
 async function fetchColumns(){
     const resCol = await fetch(new Request("http://localhost:3000/columns"));
     const columns = await resCol.json();
@@ -180,12 +200,7 @@ async function fetchColumns(){
 
         todoItems.filter(x=>x.columnId == column.id).forEach(x=>{
             const todoInstance = document.importNode(todoElement.content,true);
-            todoInstance.querySelector(".title").innerHTML = x.title;
-            todoInstance.querySelector(".description").innerHTML = x.description;
-            todoInstance.querySelector(".todo-item").addEventListener("click",toggleDescription);
-            todoInstance.querySelector(".todo-item").setAttribute("card-id",x.id);
-            todoInstance.querySelector(".edit-button").addEventListener("click",createEditInput);
-            todoInstance.querySelector(".edit-button").setAttribute("column-id",column.id);
+            handleNewCardInitialization(todoInstance,x,column.id)
             colTodoList.appendChild(todoInstance);
         })
 

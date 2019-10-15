@@ -63,14 +63,26 @@ h2{
 
 .edit-button{
     position:absolute;
-    right:5px;
+    right:25px;
     top:5px;
     z-index: 1;
     opacity: 0;
 
 }
+.delete-button{
+    position:absolute;
+    right:5px;
+    top:5px;
+    z-index: 1;
+    opacity: 0;
+}
 
 .todo-item:hover .edit-button, .edit-button:hover{
+    opacity: 1;
+    cursor:pointer;
+}
+
+.todo-item:hover .delete-button, .delete-button:hover{
     opacity: 1;
     cursor:pointer;
 }
@@ -81,3 +93,4 @@ h2{
     padding:5px;
     border-radius: 5px;
 }
+
