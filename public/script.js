@@ -16,16 +16,56 @@ window.addEventListener('load',()=>{
 
     fetchColumns();
 })
+function onDragStart(event) {
+    console.log(event)
+  event
+    .dataTransfer
+    .setData('text/plain', event.target.id);
+
+
+}
+function onDragOver(event) {
+  event.preventDefault();
+}
+
+function onDrop(event) {
+  const id = event
+    .dataTransfer
+    .getData('text');
+
+  const draggableElement = document.getElementById(id);
+
+  var dropzone = null
+  console.log(event.target)
+  console.log(event.target.parentElement)
+  if(event.target.classList.contains("title")){
+    dropzone = event.target.parentElement.parentElement;
+  }else if(event.target.classList.contains("todo-item")){
+    dropzone = event.target.parentElement;
+  }else{
+    dropzone = event.target;
+  }
+  dropzone.appendChild(draggableElement);
+
+  event
+    .dataTransfer
+    .clearData();
+}
 
 const handleNewCardInitialization = function(instance,obj,colId){
     instance.querySelector(".title").innerHTML = obj.title;
     instance.querySelector(".description").innerHTML = obj.description;
     instance.querySelector(".todo-item").addEventListener("click",toggleDescription);
     instance.querySelector(".todo-item").setAttribute("card-id",obj.id);
+    instance.querySelector(".todo-item").id = `card-${obj.id}`;
+    instance.querySelector(".todo-item").addEventListener("dragstart",onDragStart);
+
     instance.querySelector(".edit-button").addEventListener("click",createEditInput);
     instance.querySelector(".edit-button").setAttribute("column-id",colId);
     instance.querySelector(".delete-button").addEventListener("click",deleteCard(obj.id,colId));
 }
+
+
 
 const deleteCard = function (cardId,colId){
     return async function (event){
@@ -254,6 +294,8 @@ const newColInitialise = function(instance,col){
     let className = "col-"+col.id
     instance.querySelector(".trello-col").classList.add(className)
     instance.querySelector(".trello-col").setAttribute("column-id",col.id);
+    instance.querySelector(".trello-col").addEventListener("dragover",onDragOver);
+    instance.querySelector(".trello-col").addEventListener("drop",onDrop);
     instance.querySelector(".title").innerHTML = col.title;
     instance.querySelector(".title").addEventListener("click",changeColTitle)
     instance.querySelector(".delete-col-button").addEventListener("click",deleteCol);
