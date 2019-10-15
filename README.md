@@ -3,7 +3,7 @@
 
 ![Trello-like](https://user-images.githubusercontent.com/50238797/66842060-3a634900-ef9d-11e9-9786-5147b5bcbe71.PNG)
 
-An Front-end assessment from Maltem Consulting 
+An Front-end 2-days assessment from Maltem Consulting 
 
 ## Installation Instructions
 1. Installs all the dependencies of the project using
@@ -40,3 +40,6 @@ npm start
 - Testing
 - Search for any keywords presents on one or multiple cards
 - Unique cards and columns
+
+## Disclaimer
+This project is just an assessment project and it is meant to look similar to Trello as much as possible.
