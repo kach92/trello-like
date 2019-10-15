@@ -27,15 +27,15 @@ npm start
    - Each column is defined by a title and the cards it contains,
    - Each card is defined by a mandatory title, an optional description and the column that it belongs to.
 3. User is able to:
-   - display all columns with all cards,
-   - create a new card,
-   - modify a card,
-   - delete a card,
-   - add a column,
-   - modify a column,
-   - delete a column,
-   - drag and drop a card from one column to another,
-   - click on a card to see its description. 
+   - display all columns with all cards
+   - create a new card (click "Add new card.." prompt)
+   - modify a card (click on pencil icon)
+   - delete a card (click on bin icon)
+   - add a column 
+   - modify a column (click on title to edit, press "enter" to submit)
+   - delete a column (click on bin icon)
+   - drag and drop a card from one column to another
+   - click on a card to see its description (toggle)
 
 ## Unfinished task
 - Testing
