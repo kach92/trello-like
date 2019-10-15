@@ -18,48 +18,30 @@
       "id": 2,
       "title": "Card 2",
       "description": "Quisque et pellentesque sem.",
-      "columnId": 1
+      "columnId": null
     },
     {
       "id": 4,
       "title": "Card 4",
       "description": "Quisque id scelerisque felis, sit amet scelerisque nunc.",
-      "columnId": 2
+      "columnId": null
     },
     {
       "title": "Card 5we",
       "description": "Suspendisse posuere ipsum at dui lacinia, ut faucibus lectus mollis.",
-      "columnId": "2",
+      "columnId": null,
       "id": 5
-    },
-    {
-      "title": "rrrr123",
-      "description": "qwewww2",
-      "columnId": "1",
-      "id": 6
-    },
-    {
-      "title": "really is just testing",
-      "description": "test",
-      "columnId": "1",
-      "id": 8
-    },
-    {
-      "title": "rrr",
-      "description": "qqq",
-      "columnId": "1",
-      "id": 11
     },
     {
       "title": "wdqwdw",
       "description": "dqdwqwdqweqwe123123123",
-      "columnId": "2",
+      "columnId": null,
       "id": 12
     },
     {
       "title": "bbb",
       "description": "aaaa",
-      "columnId": "2",
+      "columnId": null,
       "id": 13
     },
     {
@@ -70,7 +52,7 @@
     {
       "title": "fff12321",
       "description": "fff12321qQQQQQ",
-      "columnId": "1",
+      "columnId": null,
       "id": 15
     },
     {
@@ -97,6 +79,41 @@
       "title": "fds",
       "description": "",
       "id": 20
+    },
+    {
+      "title": "fefe",
+      "description": "",
+      "id": 21,
+      "columnId": null
+    },
+    {
+      "title": "ewf",
+      "description": "",
+      "id": 22,
+      "columnId": null
+    },
+    {
+      "title": "qwdqwd",
+      "description": "",
+      "id": 23,
+      "columnId": null
+    },
+    {
+      "title": "ewqew",
+      "description": "",
+      "id": 24,
+      "columnId": "1"
+    },
+    {
+      "title": "wdqwd",
+      "description": "",
+      "id": 25
+    },
+    {
+      "title": "qwdw",
+      "description": "",
+      "id": 26,
+      "columnId": "1"
     }
   ]
 }

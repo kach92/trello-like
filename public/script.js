@@ -28,28 +28,52 @@ function onDragOver(event) {
   event.preventDefault();
 }
 
-function onDrop(event) {
-  const id = event
-    .dataTransfer
-    .getData('text');
+async function onDrop(event) {
+    const id = event
+        .dataTransfer
+        .getData('text');
 
-  const draggableElement = document.getElementById(id);
+    const draggableElement = document.getElementById(id);
 
-  var dropzone = null
-  console.log(event.target)
-  console.log(event.target.parentElement)
-  if(event.target.classList.contains("title")){
-    dropzone = event.target.parentElement.parentElement;
-  }else if(event.target.classList.contains("todo-item")){
-    dropzone = event.target.parentElement;
-  }else{
-    dropzone = event.target;
-  }
-  dropzone.appendChild(draggableElement);
+    var dropzone = null
+    console.log(event.target)
+    if(event.target.classList.contains("title")){
+        dropzone = event.target.parentElement.parentElement;
+    }else if(event.target.classList.contains("todo-item")){
+        dropzone = event.target.parentElement;
+    }else if(event.target.classList.contains("createInput")){
+        dropzone = event.target.parentElement.children[1];
 
-  event
-    .dataTransfer
-    .clearData();
+
+    }else if(event.target.classList.contains("trello-col")){
+        dropzone = event.target.children[1];
+
+    }else{
+        dropzone = event.target;
+    }
+    console.log(dropzone)
+    dropzone.appendChild(draggableElement);
+    const targetCol = dropzone.parentElement;
+    const colId = targetCol.getAttribute("column-id");
+    const cardId = draggableElement.getAttribute("card-id");
+    const resGetCard = await fetch(new Request("http://localhost:3000/cards/"+cardId));
+    const card = await resGetCard.json();
+    card["columnId"] = colId
+    const updateCard = await fetch('http://localhost:3000/cards/'+cardId, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(card)
+    }).then(function(response) {
+        return response.json();
+    }).then(function(data) {
+        return data
+    });
+
+    event
+        .dataTransfer
+        .clearData();
 }
 
 const handleNewCardInitialization = function(instance,obj,colId){
