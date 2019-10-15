@@ -38,6 +38,7 @@ h2{
 .trello-col h2{
     font-size:17px;
     margin-bottom:5px;
+    cursor:default;
 }
 
 
@@ -171,4 +172,14 @@ h2{
 .trello-col:hover .delete-col-button{
     opacity: 1;
     cursor: pointer;
+}
+
+.col-title-change-input{
+    background:none;
+    border:none;
+    font-size:17px;
+    margin-bottom:5px;
+    cursor:default;
+    font-weight: bold;
+    width:100%;
 }

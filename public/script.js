@@ -8,6 +8,8 @@ const todoElement = document.getElementById("todo-item");
 const cardInputElement = document.getElementById("card-input");
 const addPromptElement = document.getElementById("add-prompt");
 const addColElement = document.getElementById("create-col");
+const colTitleChangeElement = document.getElementById("col-title-change-input")
+const colTitleElement = document.getElementById("col-title-temp")
 
 
 window.addEventListener('load',()=>{
@@ -204,12 +206,56 @@ async function deleteCol(event){
     main.removeChild(targetCol);
 }
 
+
+
+const updateColTitle = function(colId){
+    return async function (event){
+        if(event.keyCode === 13){
+            event.preventDefault(); // Ensure it is only this code that rusn
+            const targetCol = event.target.parentElement;
+            const obj = {
+                title:event.target.value
+            }
+            const updateColTitle = await fetch('http://localhost:3000/columns/'+colId, {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            }).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                return data
+            });
+
+            const colTitleInstance = document.importNode(colTitleElement.content,true);
+            colTitleInstance.querySelector(".title").innerHTML = updateColTitle.title;
+            colTitleInstance.querySelector(".title").addEventListener("click",changeColTitle);
+            targetCol.insertBefore(colTitleInstance,event.target);
+            targetCol.removeChild(event.target);
+
+        }
+    }
+}
+
+const changeColTitle = function(event){
+    const targetCol = event.target.parentElement;
+    const colId = targetCol.getAttribute("column-id")
+    const colTitleInputInstance = document.importNode(colTitleChangeElement.content,true);
+    colTitleInputInstance.querySelector(".col-title-change-input").value=event.target.innerText;
+    colTitleInputInstance.querySelector(".col-title-change-input").addEventListener("keypress",updateColTitle(colId))
+    targetCol.insertBefore(colTitleInputInstance,event.target);
+    targetCol.removeChild(event.target);
+
+}
+
 const newColInitialise = function(instance,col){
 
     let className = "col-"+col.id
     instance.querySelector(".trello-col").classList.add(className)
     instance.querySelector(".trello-col").setAttribute("column-id",col.id);
     instance.querySelector(".title").innerHTML = col.title;
+    instance.querySelector(".title").addEventListener("click",changeColTitle)
     instance.querySelector(".delete-col-button").addEventListener("click",deleteCol);
     const createInputPrompt = instance.querySelector(".createInput");
     createInputPrompt.addEventListener("click",createInput);
