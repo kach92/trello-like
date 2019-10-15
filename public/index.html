@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<!DOCTYPE>
 <html>
     <head>
         <title>Trello-Like</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
+
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.3/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" type="text/css" href="style.css">
 
     </head>
     <body>
@@ -29,13 +30,19 @@
 
         <template id="todo-item">
             <div class="todo-item">
-                <p class="description"></p>
+                <p class="title"></p>
+                <p class="description" style="display:none"></p>
             </div>
 
         </template>
 
         <template id="card-input">
             <style>
+                .card-input span{
+                    display:block;
+                    font-size:12px;
+                    margin-top:10px;
+                }
                 .add-button{
                     background-color: #4e933c;
                     color:white;
@@ -68,12 +75,18 @@
                 }
             </style>
             <div class="card-input">
+                <span>Title</span>
+                <input type="text" class="card-title-input"/>
+                <span>Description</span>
                 <textarea class="card-description-input"></textarea>
                 <div class="input-confirmation-container">
                     <button class="add-button">Add</button>
                     <i class='bx bx-x x-button'></i>
                 </div>
             </div>
+        </template>
+        <template id="add-prompt">
+            <p class="createInput">Add a card...</p>
         </template>
 
         <script type="module" src="../script.js"></script>

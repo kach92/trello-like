@@ -6,9 +6,7 @@ const main = document.getElementById("main");
 const colElement = document.getElementById("trello-col");
 const todoElement = document.getElementById("todo-item");
 const cardInputElement = document.getElementById("card-input");
-const idTracker = {
-    card:0,
-}
+const addPromptElement = document.getElementById("add-prompt");
 
 
 window.addEventListener('load',()=>{
@@ -20,7 +18,9 @@ window.addEventListener('load',()=>{
 const addCardIntoList = function(colId,obj){
     const todoList = main.querySelector(".col-"+colId).querySelector(".todo-list");
     const todoInstance = document.importNode(todoElement.content,true);
+    todoInstance.querySelector(".title").innerHTML = obj.title;
     todoInstance.querySelector(".description").innerHTML = obj.description;
+    todoInstance.querySelector(".todo-item").addEventListener("click",toggleDescription)
     todoList.appendChild(todoInstance);
 
 }
@@ -28,8 +28,9 @@ const addCardIntoList = function(colId,obj){
 async function postInput(event){
     const colId = event.target.getAttribute("column-id");
     const textArea = main.querySelector(".col-"+colId).querySelector(".card-description-input");
+    const titleInput = main.querySelector(".col-"+colId).querySelector(".card-title-input");
     const obj = {
-        "title": `Card ${idTracker.card}`,
+        "title": titleInput.value,
         "description": textArea.value,
         "columnId": colId
     };
@@ -47,9 +48,20 @@ async function postInput(event){
     });
     addCardIntoList(colId,obj);
     textArea.value="";
-    idTracker.card++;
+    titleInput.value="";
 
 }
+
+const closeInput = function(event){
+    const colId = event.target.getAttribute("column-id");
+    const targetCol = main.querySelector(".col-"+colId);
+    targetCol.removeChild(targetCol.querySelector(".card-input"));
+    const addPromptInstance = document.importNode(addPromptElement.content,true);
+    addPromptInstance.querySelector(".createInput").addEventListener("click",createInput);
+    addPromptInstance.querySelector(".createInput").setAttribute("column-id",colId);
+    targetCol.appendChild(addPromptInstance);
+}
+
 const createInput = function(event){
     const targetCol = event.target.parentElement;
     const colId = event.target.getAttribute("column-id")
@@ -57,11 +69,26 @@ const createInput = function(event){
     const cardInputInstance = document.importNode(cardInputElement.content,true);
     cardInputInstance.querySelector(".add-button").addEventListener("click",postInput);
     cardInputInstance.querySelector(".add-button").setAttribute("column-id",colId);
+    cardInputInstance.querySelector(".x-button").setAttribute("column-id",colId);
+    cardInputInstance.querySelector(".x-button").addEventListener("click",closeInput)
     targetCol.appendChild(cardInputInstance);
 }
 
 const addItem = function(){
     console.log("ADDING")
+}
+
+const toggleDescription = function(event){
+    let description = null;
+    if(event.target.classList.contains("todo-item")){
+        description = event.target.querySelector(".description");
+    }else{
+        description = event.target.parentElement.querySelector(".description");
+    }
+    if(description.style.display == 'block')
+        description.style.display = 'none';
+    else
+        description.style.display = 'block';
 }
 
 async function fetchColumns(){
@@ -70,7 +97,6 @@ async function fetchColumns(){
 
     const resItems = await fetch(new Request("http://localhost:3000/cards"));
     const todoItems = await resItems.json();
-    idTracker.card = todoItems[todoItems.length-1].id+1;
     // columns.forEach(column=>{
     //     const el = document.createElement('trello-col');
     //     el.classList = "trello-col"
@@ -100,7 +126,10 @@ async function fetchColumns(){
 
         todoItems.filter(x=>x.columnId == column.id).forEach(x=>{
             const todoInstance = document.importNode(todoElement.content,true);
+            todoInstance.querySelector(".title").innerHTML = x.title;
             todoInstance.querySelector(".description").innerHTML = x.description;
+            todoInstance.querySelector(".todo-item").addEventListener("click",toggleDescription)
+
             colTodoList.appendChild(todoInstance);
         })
 

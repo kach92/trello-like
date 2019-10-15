@@ -8,9 +8,11 @@
 
 h2{
     margin-top:0;
+
 }
 
 .trello-col{
+
     border:1px solid black;
     background-color: #e3e4e6;
     margin:10px;
@@ -21,7 +23,14 @@ h2{
     border-radius: 5px;
     max-height:90vh;
     overflow-y: auto;
+    width:250px;
 }
+
+.trello-col h2{
+    font-size:20px;
+    margin-bottom:5px;
+}
+
 
 .todo-list{
     display: flex;
@@ -37,7 +46,16 @@ h2{
 
 }
 
-.todo-item p{
+.todo-item .title{
     margin:0;
     font-size:13px;
+    font-weight: bold;
+}
+
+.todo-item .description{
+    font-weight: normal;
+    margin:0;
+    font-size:13px;
+    font-style: italic;
+    margin-top:10px;
 }
