@@ -22,8 +22,8 @@
     },
     {
       "title": "Check students projects",
-      "description": "Run through with students",
-      "columnId": "1",
+      "description": "Run through with students edited",
+      "columnId": "2",
       "id": 3
     },
     {
@@ -43,6 +43,12 @@
       "description": "Leetcode and HackerRank",
       "columnId": "1",
       "id": 6
+    },
+    {
+      "title": "Trying this app out",
+      "description": "Testing all functions",
+      "columnId": "1",
+      "id": 7
     }
   ]
 }
