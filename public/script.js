@@ -1,15 +1,11 @@
-import './webcomponents/trello-col.js';
-import './webcomponents/todo-item.js';
-import './webcomponents/add-item-prompt.js';
-
 const main = document.getElementById("main");
 const colElement = document.getElementById("trello-col");
 const todoElement = document.getElementById("todo-item");
 const cardInputElement = document.getElementById("card-input");
 const addPromptElement = document.getElementById("add-prompt");
 const addColElement = document.getElementById("create-col");
-const colTitleChangeElement = document.getElementById("col-title-change-input")
-const colTitleElement = document.getElementById("col-title-temp")
+const colTitleChangeElement = document.getElementById("col-title-change-input");
+const colTitleElement = document.getElementById("col-title-temp");
 
 
 window.addEventListener('load',()=>{
@@ -17,7 +13,6 @@ window.addEventListener('load',()=>{
     fetchColumns();
 })
 function onDragStart(event) {
-    console.log(event)
   event
     .dataTransfer
     .setData('text/plain', event.target.id);
@@ -35,30 +30,25 @@ async function onDrop(event) {
 
     const draggableElement = document.getElementById(id);
 
-    var dropzone = null
-    console.log(event.target)
+    var dropzone = null;
     if(event.target.classList.contains("title")){
         dropzone = event.target.parentElement.parentElement;
     }else if(event.target.classList.contains("todo-item")){
         dropzone = event.target.parentElement;
     }else if(event.target.classList.contains("createInput")){
         dropzone = event.target.parentElement.children[1];
-
-
     }else if(event.target.classList.contains("trello-col")){
         dropzone = event.target.children[1];
-
     }else{
         dropzone = event.target;
     }
-    console.log(dropzone)
     dropzone.appendChild(draggableElement);
     const targetCol = dropzone.parentElement;
     const colId = targetCol.getAttribute("column-id");
     const cardId = draggableElement.getAttribute("card-id");
     const resGetCard = await fetch(new Request("http://localhost:3000/cards/"+cardId));
     const card = await resGetCard.json();
-    card["columnId"] = colId
+    card["columnId"] = colId;
     const updateCard = await fetch('http://localhost:3000/cards/'+cardId, {
         method: 'PUT',
         headers: {
@@ -68,7 +58,7 @@ async function onDrop(event) {
     }).then(function(response) {
         return response.json();
     }).then(function(data) {
-        return data
+        return data;
     });
 
     event
@@ -101,7 +91,7 @@ const deleteCard = function (cardId,colId){
             }).then(function(response) {
                 return response.json();
             }).then(function(data) {
-                return data
+                return data;
         });
         const todoList = main.querySelector(".col-"+colId).querySelector(".todo-list");
         todoList.removeChild(event.target.parentElement);
@@ -133,8 +123,8 @@ async function postInput(event){
     const obj = {
         "title": titleInput.value,
         "description": textArea.value,
+        "columnId":colId
     };
-    // console.log(obj)
     const addNewCard = await fetch('http://localhost:3000/cards', {
         method: 'POST',
         headers: {
@@ -144,7 +134,7 @@ async function postInput(event){
     }).then(function(response) {
         return response.json();
     }).then(function(data) {
-        return data
+        return data;
     });
     addCardIntoList(colId,addNewCard);
     textArea.value="";
@@ -158,7 +148,7 @@ function postEdit(cardId,colId){
             title : inputContainer.querySelector(".card-title-input").value,
             description : inputContainer.querySelector(".card-description-input").value,
             columnId : colId,
-        }
+        };
         const updateCard = await fetch('http://localhost:3000/cards/'+cardId, {
             method: 'PUT',
             headers: {
@@ -168,7 +158,7 @@ function postEdit(cardId,colId){
         }).then(function(response) {
             return response.json();
         }).then(function(data) {
-            return data
+            return data;
         });
         addEditedCardIntoList(colId,updateCard,inputContainer);
 
@@ -193,7 +183,7 @@ const closeEditInput = function(cardId,colId){
         const inputContainer = event.target.parentElement.parentElement;
         const targetTodoList = main.querySelector(".col-"+colId).querySelector(".todo-list");
         const todoInstance = document.importNode(todoElement.content,true);
-        handleNewCardInitialization(todoInstance,card,colId)
+        handleNewCardInitialization(todoInstance,card,colId);
         targetTodoList.insertBefore(todoInstance,inputContainer);
         targetTodoList.removeChild(inputContainer);
 
@@ -203,14 +193,14 @@ const closeEditInput = function(cardId,colId){
 
 const createInput = function(event){
     const targetCol = event.target.parentElement;
-    const colId = event.target.getAttribute("column-id")
+    const colId = event.target.getAttribute("column-id");
     targetCol.removeChild(event.target);
     const cardInputInstance = document.importNode(cardInputElement.content,true);
     cardInputInstance.querySelector(".card-input").classList.add("add-new-card-input");
     cardInputInstance.querySelector(".add-button").addEventListener("click",postInput);
     cardInputInstance.querySelector(".add-button").setAttribute("column-id",colId);
     cardInputInstance.querySelector(".x-button").setAttribute("column-id",colId);
-    cardInputInstance.querySelector(".x-button").addEventListener("click",closeInput)
+    cardInputInstance.querySelector(".x-button").addEventListener("click",closeInput);
     targetCol.appendChild(cardInputInstance);
 }
 
@@ -224,11 +214,11 @@ const createEditInput = function(event){
     cardInputInstance.querySelector(".card-input").classList.add("edit-input")
     cardInputInstance.querySelector(".add-button").innerText = "Edit";
     cardInputInstance.querySelector(".add-button").setAttribute("card-id",cardId);
-    cardInputInstance.querySelector(".add-button").addEventListener("click", postEdit(cardId,colId))
+    cardInputInstance.querySelector(".add-button").addEventListener("click", postEdit(cardId,colId));
     cardInputInstance.querySelector(".card-title-input").value = eventTodoItem.querySelector(".title").innerText;
     cardInputInstance.querySelector(".card-description-input").value = eventTodoItem.querySelector(".description").innerText;
     cardInputInstance.querySelector(".x-button").setAttribute("column-id",colId);
-    cardInputInstance.querySelector(".x-button").addEventListener("click",closeEditInput(cardId,colId))
+    cardInputInstance.querySelector(".x-button").addEventListener("click",closeEditInput(cardId,colId));
     targetTodoList.insertBefore(cardInputInstance,eventTodoItem);
     targetTodoList.removeChild(event.target.parentElement);
 }
@@ -249,7 +239,7 @@ const toggleDescription = function(event){
 const createInsertNewCol = function(col){
     const addNewColContainer = document.querySelector(".add-new-col-container");
     const colInstance = document.importNode(colElement.content,true);
-    newColInitialise(colInstance,col)
+    newColInitialise(colInstance,col);
     main.insertBefore(colInstance,addNewColContainer);
 
 }
@@ -265,7 +255,7 @@ async function deleteCol(event){
         }).then(function(response) {
             return response.json();
         }).then(function(data) {
-            return data
+            return data;
     });
     main.removeChild(targetCol);
 }
@@ -279,7 +269,7 @@ const updateColTitle = function(colId){
             const targetCol = event.target.parentElement;
             const obj = {
                 title:event.target.value
-            }
+            };
             const updateColTitle = await fetch('http://localhost:3000/columns/'+colId, {
                 method: 'PUT',
                 headers: {
@@ -289,7 +279,7 @@ const updateColTitle = function(colId){
             }).then(function(response) {
                 return response.json();
             }).then(function(data) {
-                return data
+                return data;
             });
 
             const colTitleInstance = document.importNode(colTitleElement.content,true);
@@ -304,10 +294,10 @@ const updateColTitle = function(colId){
 
 const changeColTitle = function(event){
     const targetCol = event.target.parentElement;
-    const colId = targetCol.getAttribute("column-id")
+    const colId = targetCol.getAttribute("column-id");
     const colTitleInputInstance = document.importNode(colTitleChangeElement.content,true);
     colTitleInputInstance.querySelector(".col-title-change-input").value=event.target.innerText;
-    colTitleInputInstance.querySelector(".col-title-change-input").addEventListener("keypress",updateColTitle(colId))
+    colTitleInputInstance.querySelector(".col-title-change-input").addEventListener("keypress",updateColTitle(colId));
     targetCol.insertBefore(colTitleInputInstance,event.target);
     targetCol.removeChild(event.target);
 
@@ -315,13 +305,13 @@ const changeColTitle = function(event){
 
 const newColInitialise = function(instance,col){
 
-    let className = "col-"+col.id
-    instance.querySelector(".trello-col").classList.add(className)
+    let className = "col-"+col.id;
+    instance.querySelector(".trello-col").classList.add(className);
     instance.querySelector(".trello-col").setAttribute("column-id",col.id);
     instance.querySelector(".trello-col").addEventListener("dragover",onDragOver);
     instance.querySelector(".trello-col").addEventListener("drop",onDrop);
     instance.querySelector(".title").innerHTML = col.title;
-    instance.querySelector(".title").addEventListener("click",changeColTitle)
+    instance.querySelector(".title").addEventListener("click",changeColTitle);
     instance.querySelector(".delete-col-button").addEventListener("click",deleteCol);
     const createInputPrompt = instance.querySelector(".createInput");
     createInputPrompt.addEventListener("click",createInput);
@@ -331,7 +321,7 @@ async function addNewColToTrello(event){
     const addNewColInput = document.querySelector(".col-name-input");
     const obj = {
         title:addNewColInput.value
-    }
+    };
     const newCol = await fetch('http://localhost:3000/columns', {
         method: 'POST',
         headers: {
@@ -341,7 +331,7 @@ async function addNewColToTrello(event){
     }).then(function(response) {
         return response.json();
     }).then(function(data) {
-        return data
+        return data;
     });
     createInsertNewCol(newCol);
 
@@ -356,23 +346,6 @@ async function fetchColumns(){
 
     const resItems = await fetch(new Request("http://localhost:3000/cards"));
     const todoItems = await resItems.json();
-    // columns.forEach(column=>{
-    //     const el = document.createElement('trello-col');
-    //     el.classList = "trello-col"
-    //     el.column = column;
-    //     todoItems.forEach(x=>{
-    //         if(x.columnId === column.id){
-    //             const item = document.createElement('todo-item');
-    //             item.classList = "todo-item"
-    //             item.item = {title:x.title,description:x.description}
-    //             el.appendChild(item);
-    //         }
-    //     })
-    //     const addItemEl = document.createElement('add-item-prompt');
-    //     addItemEl.item=null;
-    //     el.appendChild(addItemEl);
-    //     main.appendChild(el);
-    // })
     columns.forEach(column=>{
         const colInstance = document.importNode(colElement.content,true);
         newColInitialise(colInstance,column);
@@ -380,7 +353,7 @@ async function fetchColumns(){
 
         todoItems.filter(x=>x.columnId == column.id).forEach(x=>{
             const todoInstance = document.importNode(todoElement.content,true);
-            handleNewCardInitialization(todoInstance,x,column.id)
+            handleNewCardInitialization(todoInstance,x,column.id);
             colTodoList.appendChild(todoInstance);
         })
 
