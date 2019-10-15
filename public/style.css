@@ -74,3 +74,10 @@ h2{
     opacity: 1;
     cursor:pointer;
 }
+
+.edit-input{
+    background-color: white;
+    box-sizing: border-box;
+    padding:5px;
+    border-radius: 5px;
+}
