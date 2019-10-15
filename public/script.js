@@ -7,6 +7,7 @@ const colElement = document.getElementById("trello-col");
 const todoElement = document.getElementById("todo-item");
 const cardInputElement = document.getElementById("card-input");
 const addPromptElement = document.getElementById("add-prompt");
+const addColElement = document.getElementById("create-col");
 
 
 window.addEventListener('load',()=>{
@@ -119,6 +120,21 @@ const closeInput = function(event){
     targetCol.appendChild(addPromptInstance);
 }
 
+const closeEditInput = function(cardId,colId){
+    return async function(event){
+        const resCard = await fetch(new Request("http://localhost:3000/cards/"+cardId));
+        const card = await resCard.json();
+        const inputContainer = event.target.parentElement.parentElement;
+        const targetTodoList = main.querySelector(".col-"+colId).querySelector(".todo-list");
+        const todoInstance = document.importNode(todoElement.content,true);
+        handleNewCardInitialization(todoInstance,card,colId)
+        targetTodoList.insertBefore(todoInstance,inputContainer);
+        targetTodoList.removeChild(inputContainer);
+
+    }
+
+}
+
 const createInput = function(event){
     const targetCol = event.target.parentElement;
     const colId = event.target.getAttribute("column-id")
@@ -144,6 +160,8 @@ const createEditInput = function(event){
     cardInputInstance.querySelector(".add-button").addEventListener("click", postEdit(cardId,colId))
     cardInputInstance.querySelector(".card-title-input").value = eventTodoItem.querySelector(".title").innerText;
     cardInputInstance.querySelector(".card-description-input").value = eventTodoItem.querySelector(".description").innerText;
+    cardInputInstance.querySelector(".x-button").setAttribute("column-id",colId);
+    cardInputInstance.querySelector(".x-button").addEventListener("click",closeEditInput(cardId,colId))
     targetTodoList.insertBefore(cardInputInstance,eventTodoItem);
     targetTodoList.removeChild(event.target.parentElement);
 }
@@ -160,6 +178,39 @@ const toggleDescription = function(event){
         description.style.display = 'none';
     else
         description.style.display = 'block';
+}
+const createInsertNewCol = function(col){
+    const addNewColContainer = document.querySelector(".add-new-col-container");
+    const colInstance = document.importNode(colElement.content,true);
+    let className = "col-"+col.id
+    colInstance.querySelector(".trello-col").classList.add(className)
+    colInstance.querySelector(".trello-col").setAttribute("column-id",col.id);
+    colInstance.querySelector(".title").innerHTML = col.title;
+    const createInputPrompt = colInstance.querySelector(".createInput");
+    createInputPrompt.addEventListener("click",createInput);
+    createInputPrompt.setAttribute("column-id",col.id);
+    main.insertBefore(colInstance,addNewColContainer);
+
+}
+async function addNewColToTrello(event){
+    const addNewColInput = document.querySelector(".col-name-input");
+    const obj = {
+        title:addNewColInput.value
+    }
+    const newCol = await fetch('http://localhost:3000/columns', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+    }).then(function(response) {
+        return response.json();
+    }).then(function(data) {
+        return data
+    });
+    createInsertNewCol(newCol);
+
+    addNewColInput.value="";
 }
 
 
@@ -205,6 +256,11 @@ async function fetchColumns(){
         })
 
         main.appendChild(colInstance);
+
+
     })
+    const addNewColInstance = document.importNode(addColElement.content,true);
+    addNewColInstance.querySelector(".save-button").addEventListener("click",addNewColToTrello);
+    main.appendChild(addNewColInstance);
 
 }
