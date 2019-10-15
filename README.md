@@ -1,7 +1,8 @@
 # Trello-Like
 
 
-![Trello-like](https://user-images.githubusercontent.com/50238797/66842060-3a634900-ef9d-11e9-9786-5147b5bcbe71.PNG)
+![Trello-like](https://user-images.githubusercontent.com/50238797/66843823-e148e480-ef9f-11e9-87df-057d15dff5cd.PNG)
+
 
 An Front-end 2-days assessment from Maltem Consulting 
 
