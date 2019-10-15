@@ -1,140 +1,48 @@
 {
   "columns": [
     {
-      "id": 1,
-      "title": "Column 1"
+      "title": "New Task",
+      "id": 1
     },
     {
-      "title": "Coln 2efe",
+      "title": "Ongoing",
       "id": 2
     },
     {
-      "title": "qwewq",
-      "id": 6
+      "title": "Finish",
+      "id": 3
     }
   ],
   "cards": [
     {
-      "id": 2,
-      "title": "Card 2",
-      "description": "Quisque et pellentesque sem.",
-      "columnId": null
+      "title": "Do Maltem Assignment",
+      "description": "A trello assignment",
+      "columnId": "1",
+      "id": 2
     },
     {
-      "id": 4,
-      "title": "Card 4",
-      "description": "Quisque id scelerisque felis, sit amet scelerisque nunc.",
-      "columnId": null
+      "title": "Check students projects",
+      "description": "Run through with students",
+      "columnId": "1",
+      "id": 3
     },
     {
-      "title": "Card 5we",
-      "description": "Suspendisse posuere ipsum at dui lacinia, ut faucibus lectus mollis.",
-      "columnId": null,
+      "title": "Job search",
+      "description": "No offers so far",
+      "columnId": "2",
+      "id": 4
+    },
+    {
+      "title": "Discussion with instructor on new projects",
+      "description": "Need to think of new events.",
+      "columnId": "2",
       "id": 5
     },
     {
-      "title": "wdqwdw",
-      "description": "dqdwqwdqweqwe123123123",
-      "columnId": null,
-      "id": 12
-    },
-    {
-      "title": "bbb",
-      "description": "aaaa",
-      "columnId": null,
-      "id": 13
-    },
-    {
-      "title": "rrrr123",
-      "description": "qwewww",
-      "id": 14
-    },
-    {
-      "title": "fff12321",
-      "description": "fff12321qQQQQQ",
-      "columnId": null,
-      "id": 15
-    },
-    {
-      "title": "wilfred",
-      "description": "noob",
-      "id": 16
-    },
-    {
-      "title": "test",
-      "description": "test2",
-      "id": 17
-    },
-    {
-      "title": "fefefef",
-      "description": "www",
-      "id": 18
-    },
-    {
-      "title": "fff",
-      "description": "qqq",
-      "id": 19
-    },
-    {
-      "title": "fds",
-      "description": "",
-      "id": 20
-    },
-    {
-      "title": "fefe",
-      "description": "",
-      "id": 21,
-      "columnId": null
-    },
-    {
-      "title": "ewf",
-      "description": "",
-      "id": 22,
-      "columnId": null
-    },
-    {
-      "title": "qwdqwd",
-      "description": "",
-      "id": 23,
-      "columnId": null
-    },
-    {
-      "title": "ewqew",
-      "description": "",
-      "id": 24,
-      "columnId": "1"
-    },
-    {
-      "title": "wdqwd",
-      "description": "",
-      "id": 25
-    },
-    {
-      "title": "qwdw",
-      "description": "",
-      "id": 26,
-      "columnId": "2"
-    },
-    {
-      "title": "wq",
-      "description": "",
-      "id": 27
-    },
-    {
-      "title": "wewe",
-      "description": "",
-      "id": 28
-    },
-    {
-      "title": "wewe",
-      "description": "",
-      "id": 29
-    },
-    {
-      "title": "efw",
-      "description": "",
+      "title": "Practice coding",
+      "description": "Leetcode and HackerRank",
       "columnId": "1",
-      "id": 30
+      "id": 6
     }
   ]
 }
