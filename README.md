@@ -7,7 +7,8 @@
 An Front-end 2-days assessment from Maltem Consulting 
 
 ## Installation Instructions
-1. Installs all the dependencies of the project using
+1. Fork and clone the project
+2. Installs all the dependencies of the project using
 ```
 npm install
 ````
