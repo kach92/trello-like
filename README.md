@@ -17,7 +17,7 @@ npm install
 npm start
 ````
 ## Technologies Used
-- Web Components
+- Web Components (HTML Template)
 - HTML, CSS, Vanilla JavaScript
 - HTML Drag and Drop
 - [JSON Server](https://github.com/typicode/json-server) as fake API
